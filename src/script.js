@@ -17,14 +17,34 @@ const scene = new THREE.Scene()
 /**
  * Lights
  */
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.5)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
 scene.add(ambientLight)
 
-const pointLight = new THREE.PointLight(0xffffff, 50)
-pointLight.position.x = 2
-pointLight.position.y = 3
-pointLight.position.z = 4
+const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.9)
+directionalLight.position.set(2, 2, 2)
+scene.add(directionalLight)
+
+const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.9)
+scene.add(hemisphereLight)
+
+const pointLight = new THREE.PointLight(0xff9000, 1.5, 5)
+pointLight.position.set(1, - 0.5, 1)
 scene.add(pointLight)
+
+const recAreaLight = new THREE.RectAreaLight(0x4e00ff, 6, 1, 1)
+recAreaLight.position.set(- 1.5, 0, 1.5)
+recAreaLight.lookAt(new THREE.Vector3())
+scene.add(recAreaLight)
+
+/**
+ * GUI
+ */
+const lightingFolder = gui.addFolder('Lighting')
+lightingFolder.add(ambientLight, 'intensity').min(0).max(3).step(0.001).name('Ambient Intensity')
+lightingFolder.add(directionalLight, 'intensity').min(0).max(3).step(0.001).name('Directional Intensity')
+lightingFolder.add(hemisphereLight, 'intensity').min(0).max(3).step(0.001).name('Hemisphere Intensity')
+lightingFolder.add(pointLight, 'intensity').min(0).max(3).step(0.001).name('Point Intensity')
+lightingFolder.add(pointLight, 'distance').min(0).max(5).step(0.001).name('Point Distance')
 
 /**
  * Objects
